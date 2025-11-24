@@ -1,0 +1,20 @@
+public class Dokter extends TenagaMedis {
+    private String spesialis;
+
+    // Constructor berparameter
+    public Dokter(String id, String nama, String bidang, String spesialis) {
+        super(id, nama, bidang);
+        this.spesialis = spesialis;
+    }
+    public String getSpesialis() {
+        return spesialis;
+    }
+    public void setSpesialis(String spesialis) {
+        this.spesialis = spesialis;
+    }
+    @Override
+    public void tampilkanInfo() {
+        super.tampilkanInfo();
+        System.out.println("Spesialis: " + spesialis);
+    }
+}
