@@ -1,0 +1,186 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class KlinikSehatAbadi {
+public static void main(String[] args) {
+    Scanner input = new Scanner(System.in);
+    ArrayList<TenagaMedis> daftarTenagaMedis = new ArrayList<>();
+int pilih;
+do {
+    System.out.println("\n=== APLIKASI KLINIK SEHAT ABADI ===");
+    System.out.println("1. Tambah Tenaga Medis");
+    System.out.println("2. Tampilkan Semua Tenaga Medis");
+    System.out.println("3. Cari Tenaga Medis");
+    System.out.println("4. Ubah Data Tenaga Medis");
+    System.out.println("5. Cek Status Tenaga Medis");
+    System.out.println("6. Keluar");
+    System.out.print("Pilih menu: ");
+    pilih = input.nextInt();
+    input.nextLine();
+
+switch (pilih) {
+
+// =============== 1. TAMBAH DATA + VALIDASI ===============
+case 1:
+    System.out.println("\nTambah Tenaga Medis:");
+    System.out.println("1. Dokter");
+    System.out.println("2. Perawat");
+    System.out.print("Pilih: ");
+    int jenis = input.nextInt();
+    input.nextLine();
+
+// Validasi ID
+    String id;
+    while (true) {
+    System.out.print("ID (5 angka): ");
+    id = input.nextLine();
+    if (id.matches("\\d{5}")) break;
+    System.out.println("❌ ID harus berupa 5 angka!");
+    }
+
+// Validasi Nama
+    String nama;
+    while (true) {
+    System.out.print("Nama: ");
+    nama = input.nextLine();
+    if (nama.matches("[a-zA-Z ]+")) break;
+    System.out.println("❌ Nama harus berupa huruf!");
+    }
+
+// Validasi Bidang
+    String bidang;
+    while (true) {
+    System.out.print("Bidang: ");
+    bidang = input.nextLine();
+    if (bidang.matches("[a-zA-Z ]+")) break;
+    System.out.println("❌ Bidang harus berupa huruf!");
+    }
+
+    if (jenis == 1) {
+    System.out.print("Spesialis: ");
+    String spesialis = input.nextLine();
+    daftarTenagaMedis.add(new Dokter(id, nama, bidang, spesialis));
+    } else {
+    System.out.print("Shift: ");
+    String shift = input.nextLine();
+    daftarTenagaMedis.add(new Perawat(id, nama, bidang, shift));
+    }
+
+    System.out.println("✅ Data berhasil ditambahkan!");
+    break;
+
+// =============== 2. TAMPILKAN DIPISAH ===============
+case 2:
+    System.out.println("\n=== DATA TENAGA MEDIS ===");
+    if (daftarTenagaMedis.isEmpty()) {
+    System.out.println("Belum ada data.");
+    } else {
+
+    System.out.println("\n=== DAFTAR DOKTER ===");
+    boolean adaDokter = false;
+    for (TenagaMedis tm : daftarTenagaMedis) {
+    if (tm instanceof Dokter) {
+    tm.tampilkanInfo();
+    adaDokter = true;
+    System.out.println("-------------------");
+    }
+    }
+    if (!adaDokter) System.out.println("(Tidak ada data dokter)");
+
+    System.out.println("\n=== DAFTAR PERAWAT ===");
+    boolean adaPerawat = false;
+    for (TenagaMedis tm : daftarTenagaMedis) {
+    if (tm instanceof Perawat) {
+    tm.tampilkanInfo();
+    adaPerawat = true;
+    System.out.println("-------------------");
+    }
+    }
+    if (!adaPerawat) System.out.println("(Tidak ada data perawat)");
+    }
+    break;
+
+// =============== 3. CARI DATA ===============
+case 3:
+    System.out.print("\nMasukkan ID yang dicari: ");
+    String cari = input.nextLine();
+    boolean ditemukan = false;
+    for (TenagaMedis tm : daftarTenagaMedis) {
+    if (tm.getId().equals(cari)) {
+    tm.tampilkanInfo();
+    ditemukan = true;
+    break;
+    }
+    }
+    if (!ditemukan) {
+    System.out.println("❌ Data tidak ditemukan.");
+    }
+    break;
+
+// =============== 4. UBAH DATA ===============
+case 4:
+    System.out.print("\nMasukkan ID yang akan diubah: ");
+    String ubah = input.nextLine();
+    boolean ditemukanUbah = false;
+    for (TenagaMedis tm : daftarTenagaMedis) {
+    if (tm.getId().equals(ubah)) {
+
+// Validasi nama baru
+    String namaBaru;
+    while (true) {
+    System.out.print("Nama baru: ");
+    namaBaru = input.nextLine();
+    if (namaBaru.matches("[a-zA-Z ]+")) break;
+    System.out.println("❌ Nama harus huruf!");
+    }
+    tm.setNama(namaBaru);
+
+// Validasi bidang baru
+    String bidangBaru;
+    while (true) {
+    System.out.print("Bidang baru: ");
+    bidangBaru = input.nextLine();
+    if (bidangBaru.matches("[a-zA-Z ]+")) break;
+    System.out.println("❌ Bidang harus huruf!");
+    }
+    tm.setBidang(bidangBaru);
+
+    System.out.println("✅ Data berhasil diubah!");
+    ditemukanUbah = true;
+    break;
+    }
+    }
+    if (!ditemukanUbah) {
+    System.out.println("❌ Data tidak ditemukan.");
+    }
+    break;
+
+// =============== 5. CEK STATUS ===============
+case 5:
+    System.out.print("\nMasukkan ID untuk cek status: ");
+    String cek = input.nextLine();
+    boolean ditemukanStatus = false;
+    for (TenagaMedis tm : daftarTenagaMedis) {
+    if (tm.getId().equals(cek)) {
+    System.out.println("Status: " + tm.getStatus());
+    ditemukanStatus = true;
+    break;
+    }
+    }
+    if (!ditemukanStatus) {
+    System.out.println("❌ Data tidak ditemukan.");
+    }
+    break;
+
+// =============== 6. KELUAR ===============
+case 6:
+    System.out.println("Keluar...");
+    break;
+
+    default:
+    System.out.println("❗ Pilihan tidak valid!");
+}
+
+}   while (pilih != 6);
+}
+}
