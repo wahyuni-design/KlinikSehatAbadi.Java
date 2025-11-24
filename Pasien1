@@ -1,0 +1,43 @@
+// Class Pasien (Relasi: Dokter menangani Pasien)
+public class Pasien1 {
+    // --- Atribut private (Encapsulation) ---
+    private String idPasien;
+    private String nama;
+    private String keluhan;
+    // --- Constructor berparameter ---
+    public Pasien1(String idPasien, String nama, String keluhan) {
+        this.idPasien = idPasien;
+        this.nama = nama;
+        this.keluhan = keluhan;
+    }
+    // --- Getter & Setter ---
+    public String getIdPasien() {
+        return idPasien;
+    }
+    public void setIdPasien(String idPasien) {
+        this.idPasien = idPasien;
+    }
+    public String getNama() {
+        return nama;
+    }
+    public void setNama(String nama) {
+        this.nama = nama;
+    }
+    public String getKeluhan() {
+        return keluhan;
+    }
+    public void setKeluhan(String keluhan) {
+        this.keluhan = keluhan;
+    }
+
+    // --- Method tambahan ---
+    public void tampilkanInfo() {
+        System.out.println("ID Pasien: " + idPasien +
+                           ", Nama: " + nama +
+                           ", Keluhan: " + keluhan);
+    }
+
+    public String getStatus() {
+        return "Pasien terdaftar dan menunggu penanganan.";
+    }
+}
